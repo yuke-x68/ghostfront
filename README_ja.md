@@ -1,4 +1,4 @@
-# multi-agent-shogun
+# multi-agent-bridge
 
 <div align="center">
 
@@ -18,7 +18,7 @@
 
 ## これは何？
 
-**multi-agent-shogun** は、複数の Claude Code インスタンスを同時に実行し、戦国時代の軍制のように統率するシステムです。
+**multi-agent-bridge** は、複数の Claude Code インスタンスを同時に実行し、宇宙世紀の艦隊編制のように統率するシステムである。
 
 **なぜ使うのか？**
 - 1つの命令で、8体のAIワーカーが並列で実行
@@ -27,21 +27,21 @@
 - ダッシュボードでリアルタイム進捗確認
 
 ```
-      あなた（上様）
+      あなた（提督）
            │
            ▼ 命令を出す
     ┌─────────────┐
-    │   SHOGUN    │  ← 命令を受け取り、即座に委譲
+    │   CAPTAIN   │  ← 命令を受け取り、即座に委譲
     └──────┬──────┘
            │ YAMLファイル + tmux
     ┌──────▼──────┐
-    │    KARO     │  ← タスクをワーカーに分配
+    │  TACTICAL   │  ← タスクをワーカーに分配
     └──────┬──────┘
            │
   ┌─┬─┬─┬─┴─┬─┬─┬─┐
   │1│2│3│4│5│6│7│8│  ← 8体のワーカーが並列実行
   └─┴─┴─┴─┴─┴─┴─┴─┘
-      ASHIGARU
+      PILOT
 ```
 
 ---
@@ -61,9 +61,9 @@
 
 📥 **リポジトリをダウンロード**
 
-[ZIPダウンロード](https://github.com/yohey-w/multi-agent-shogun/archive/refs/heads/main.zip) して `C:\tools\multi-agent-shogun` に展開
+[ZIPダウンロード](https://github.com/yohey-w/multi-agent-bridge/archive/refs/heads/main.zip) して `C:\tools\multi-agent-bridge` に展開
 
-*または git を使用:* `git clone https://github.com/yohey-w/multi-agent-shogun.git C:\tools\multi-agent-shogun`
+*または git を使用:* `git clone https://github.com/yohey-w/multi-agent-bridge.git C:\tools\multi-agent-bridge`
 
 </td>
 </tr>
@@ -77,7 +77,7 @@
 
 🖱️ **`install.bat` を実行**
 
-右クリック→「管理者として実行」（WSL2が未インストールの場合）。WSL2 + Ubuntu をセットアップします。
+右クリック→「管理者として実行」（WSL2が未インストールの場合）。WSL2 + Ubuntu をセットアップする。
 
 </td>
 </tr>
@@ -92,7 +92,7 @@
 🐧 **Ubuntu を開いて以下を実行**（初回のみ）
 
 ```bash
-cd /mnt/c/tools/multi-agent-shogun
+cd /mnt/c/tools/multi-agent-bridge
 ./first_setup.sh
 ```
 
@@ -106,7 +106,7 @@ cd /mnt/c/tools/multi-agent-shogun
 </td>
 <td>
 
-✅ **出陣！**
+✅ **出撃！**
 
 ```bash
 ./shutsujin_departure.sh
@@ -121,7 +121,7 @@ cd /mnt/c/tools/multi-agent-shogun
 **Ubuntuターミナル**（WSL）を開いて実行：
 
 ```bash
-cd /mnt/c/tools/multi-agent-shogun
+cd /mnt/c/tools/multi-agent-bridge
 ./shutsujin_departure.sh
 ```
 
@@ -134,8 +134,8 @@ cd /mnt/c/tools/multi-agent-shogun
 
 ```bash
 # 1. リポジトリをクローン
-git clone https://github.com/yohey-w/multi-agent-shogun.git ~/multi-agent-shogun
-cd ~/multi-agent-shogun
+git clone https://github.com/yohey-w/multi-agent-bridge.git ~/multi-agent-bridge
+cd ~/multi-agent-bridge
 
 # 2. スクリプトに実行権限を付与
 chmod +x *.sh
@@ -147,7 +147,7 @@ chmod +x *.sh
 ### 毎日の起動
 
 ```bash
-cd ~/multi-agent-shogun
+cd ~/multi-agent-bridge
 ./shutsujin_departure.sh
 ```
 
@@ -160,11 +160,11 @@ cd ~/multi-agent-shogun
 
 ### WSL2について
 
-**WSL2（Windows Subsystem for Linux）** は、Windows内でLinuxを実行できる機能です。このシステムは `tmux`（Linuxツール）を使って複数のAIエージェントを管理するため、WindowsではWSL2が必要です。
+**WSL2（Windows Subsystem for Linux）** は、Windows内でLinuxを実行できる機能である。このシステムは `tmux`（Linuxツール）を使って複数のAIエージェントを管理するため、WindowsではWSL2が必要である。
 
 ### WSL2がまだない場合
 
-問題ありません！`install.bat` を実行すると：
+問題ない。`install.bat` を実行すると：
 1. WSL2がインストールされているかチェック（なければ自動インストール）
 2. Ubuntuがインストールされているかチェック（なければ自動インストール）
 3. 次のステップ（`first_setup.sh` の実行方法）を案内
@@ -174,7 +174,7 @@ cd ~/multi-agent-shogun
 wsl --install
 ```
 
-その後、コンピュータを再起動して `install.bat` を再実行してください。
+その後、コンピュータを再起動して `install.bat` を再実行すること。
 
 </details>
 
@@ -195,12 +195,12 @@ wsl --install
 - ✅ 次のステップ（`first_setup.sh` の実行方法）を案内
 
 ### `shutsujin_departure.sh` が行うこと：
-- ✅ tmuxセッションを作成（shogun + multiagent）
+- ✅ tmuxセッションを作成（bridge + hangar）
 - ✅ 全エージェントでClaude Codeを起動
 - ✅ 各エージェントに指示書を自動読み込み
 - ✅ キューファイルをリセットして新しい状態に
 
-**実行後、全エージェントが即座にコマンドを受け付ける準備完了！**
+**実行後、全エージェントが即座にコマンドを受け付ける準備完了。**
 
 </details>
 
@@ -225,46 +225,46 @@ wsl --install
 
 ### ✅ セットアップ後の状態
 
-どちらのオプションでも、**10体のAIエージェント**が自動起動します：
+どちらのオプションでも、**10体のAIエージェント**が自動起動する：
 
 | エージェント | 役割 | 数 |
 |-------------|------|-----|
-| 🏯 将軍（Shogun） | 総大将 - あなたの命令を受ける | 1 |
-| 📋 家老（Karo） | 管理者 - タスクを分配 | 1 |
-| ⚔️ 足軽（Ashigaru） | ワーカー - 並列でタスク実行 | 8 |
+| 🚀 艦長（Captain） | 司令官 - あなたの命令を受ける | 1 |
+| 📋 戦術長（Tactical） | 管理者 - タスクを分配 | 1 |
+| 🛩️ パイロット（Pilot） | ワーカー - 並列でタスク実行 | 8 |
 
-tmuxセッションが作成されます：
-- `shogun` - ここに接続してコマンドを出す
-- `multiagent` - ワーカーがバックグラウンドで稼働
+tmuxセッションが作成される：
+- `bridge` - ここに接続してコマンドを出す
+- `hangar` - ワーカーがバックグラウンドで稼働
 
 ---
 
 ## 📖 基本的な使い方
 
-### Step 1: 将軍に接続
+### Step 1: 艦長に接続
 
-`shutsujin_departure.sh` 実行後、全エージェントが自動的に指示書を読み込み、作業準備完了となります。
+`shutsujin_departure.sh` 実行後、全エージェントが自動的に指示書を読み込み、作業準備完了となる。
 
-新しいターミナルを開いて将軍に接続：
+新しいターミナルを開いて艦長に接続：
 
 ```bash
-tmux attach-session -t shogun
+tmux attach-session -t bridge
 ```
 
 ### Step 2: 最初の命令を出す
 
-将軍は既に初期化済み！そのまま命令を出せます：
+艦長は既に初期化済みである。そのまま命令を出せる：
 
 ```
 JavaScriptフレームワーク上位5つを調査して比較表を作成せよ
 ```
 
-将軍は：
+艦長は：
 1. タスクをYAMLファイルに書き込む
-2. 家老（管理者）に通知
+2. 戦術長（管理者）に通知
 3. 即座にあなたに制御を返す（待つ必要なし！）
 
-その間、家老はタスクを足軽ワーカーに分配し、並列実行します。
+その間、戦術長はタスクをパイロットワーカーに分配し、並列実行する。
 
 ### Step 3: 進捗を確認
 
@@ -274,9 +274,9 @@ JavaScriptフレームワーク上位5つを調査して比較表を作成せよ
 ## 進行中
 | ワーカー | タスク | 状態 |
 |----------|--------|------|
-| 足軽 1 | React調査 | 実行中 |
-| 足軽 2 | Vue調査 | 実行中 |
-| 足軽 3 | Angular調査 | 完了 |
+| パイロット 1 | React調査 | 実行中 |
+| パイロット 2 | Vue調査 | 実行中 |
+| パイロット 3 | Angular調査 | 完了 |
 ```
 
 ---
@@ -289,27 +289,27 @@ JavaScriptフレームワーク上位5つを調査して比較表を作成せよ
 
 ```
 あなた: 「5つのMCPサーバを調査せよ」
-→ 5体の足軽が同時に調査開始
+→ 5体のパイロットが同時に調査開始
 → 数時間ではなく数分で結果が出る
 ```
 
 ### 🔄 2. ノンブロッキングワークフロー
 
-将軍は即座に委譲して、あなたに制御を返します：
+艦長は即座に委譲して、あなたに制御を返す：
 
 ```
-あなた: 命令 → 将軍: 委譲 → あなた: 次の命令をすぐ出せる
+あなた: 命令 → 艦長: 委譲 → あなた: 次の命令をすぐ出せる
                                     ↓
                     ワーカー: バックグラウンドで実行
                                     ↓
                     ダッシュボード: 結果を表示
 ```
 
-長いタスクの完了を待つ必要はありません。
+長いタスクの完了を待つ必要はない。
 
 ### 🧠 3. セッション間記憶（Memory MCP）
 
-AIがあなたの好みを記憶します：
+AIがあなたの好みを記憶する：
 
 ```
 セッション1: 「シンプルな方法が好き」と伝える
@@ -321,25 +321,25 @@ AIがあなたの好みを記憶します：
 
 ### 📡 4. イベント駆動（ポーリングなし）
 
-エージェントはYAMLファイルで通信し、tmux send-keysで互いを起こします。
-**ポーリングループでAPIコールを浪費しません。**
+エージェントはYAMLファイルで通信し、tmux send-keysで互いを起こす。
+**ポーリングループでAPIコールを浪費しない。**
 
 ### 📸 5. スクリーンショット連携
 
-VSCode拡張のClaude Codeはスクショを貼り付けて事象を説明できます。このCLIシステムでも同等の機能を実現：
+VSCode拡張のClaude Codeはスクショを貼り付けて事象を説明できる。このCLIシステムでも同等の機能を実現：
 
 ```
 # config/settings.yaml でスクショフォルダを設定
 screenshot:
   path: "/mnt/c/Users/あなたの名前/Pictures/Screenshots"
 
-# 将軍に伝えるだけ:
+# 艦長に伝えるだけ:
 あなた: 「最新のスクショを見ろ」
 あなた: 「スクショ2枚見ろ」
 → AIが即座にスクリーンショットを読み取って分析
 ```
 
-**💡 Windowsのコツ:** `Win + Shift + S` でスクショが撮れます。保存先を `settings.yaml` のパスに合わせると、シームレスに連携できます。
+**💡 Windowsのコツ:** `Win + Shift + S` でスクショが撮れる。保存先を `settings.yaml` のパスに合わせると、シームレスに連携できる。
 
 こんな時に便利：
 - UIのバグを視覚的に説明
@@ -353,11 +353,11 @@ screenshot:
 | レイヤー | 場所 | 用途 |
 |---------|------|------|
 | Memory MCP | `memory/shogun_memory.jsonl` | セッションを跨ぐ長期記憶 |
-| グローバル | `memory/global_context.md` | システム全体の設定、殿の好み |
+| グローバル | `memory/global_context.md` | システム全体の設定、提督の好み |
 | プロジェクト | `context/{project}.md` | プロジェクト固有の知見 |
 
 この設計により：
-- どの足軽でも任意のプロジェクトを担当可能
+- どのパイロットでも任意のプロジェクトを担当可能
 - エージェント切り替え時もコンテキスト継続
 - 関心の分離が明確
 - セッション間の知識永続化
@@ -379,7 +379,7 @@ screenshot:
 この統一フォーマットにより：
 - どのエージェントでも素早くオンボーディング可能
 - すべてのプロジェクトで一貫した情報管理
-- 足軽間の作業引き継ぎが容易
+- パイロット間の作業引き継ぎが容易
 
 ---
 
@@ -387,24 +387,24 @@ screenshot:
 
 | エージェント | モデル | 思考モード | 理由 |
 |-------------|--------|----------|------|
-| 将軍 | Opus | 無効 | 委譲とダッシュボード更新に深い推論は不要 |
-| 家老 | デフォルト | 有効 | タスク分配には慎重な判断が必要 |
-| 足軽 | デフォルト | 有効 | 実装作業にはフル機能が必要 |
+| 艦長 | Opus | 無効 | 委譲とダッシュボード更新に深い推論は不要 |
+| 戦術長 | デフォルト | 有効 | タスク分配には慎重な判断が必要 |
+| パイロット | デフォルト | 有効 | 実装作業にはフル機能が必要 |
 
-将軍は `MAX_THINKING_TOKENS=0` で拡張思考を無効化し、高レベルな判断にはOpusの能力を維持しつつ、レイテンシとコストを削減。
+艦長は `MAX_THINKING_TOKENS=0` で拡張思考を無効化し、高レベルな判断にはOpusの能力を維持しつつ、レイテンシとコストを削減。
 
 ---
 
 ## 🎯 設計思想
 
-### なぜ階層構造（将軍→家老→足軽）なのか
+### なぜ階層構造（艦長→戦術長→パイロット）なのか
 
-1. **即座の応答**: 将軍は即座に委譲し、あなたに制御を返す
-2. **並列実行**: 家老が複数の足軽に同時分配
+1. **即座の応答**: 艦長は即座に委譲し、あなたに制御を返す
+2. **並列実行**: 戦術長が複数のパイロットに同時分配
 3. **単一責任**: 各役割が明確に分離され、混乱しない
-4. **スケーラビリティ**: 足軽を増やしても構造が崩れない
-5. **障害分離**: 1体の足軽が失敗しても他に影響しない
-6. **人間への報告一元化**: 将軍だけが人間とやり取りするため、情報が整理される
+4. **スケーラビリティ**: パイロットを増やしても構造が崩れない
+5. **障害分離**: 1体のパイロットが失敗しても他に影響しない
+6. **人間への報告一元化**: 艦長だけが人間とやり取りするため、情報が整理される
 
 ### なぜ YAML + send-keys なのか
 
@@ -412,23 +412,23 @@ screenshot:
 2. **ポーリング不要**: イベント駆動でAPIコストを削減
 3. **割り込み防止**: エージェント同士やあなたの入力への割り込みを防止
 4. **デバッグ容易**: 人間がYAMLを直接読んで状況把握できる
-5. **競合回避**: 各足軽に専用ファイルを割り当て
+5. **競合回避**: 各パイロットに専用ファイルを割り当て
 
-### なぜ dashboard.md は家老のみが更新するのか
+### なぜ dashboard.md は戦術長のみが更新するのか
 
 1. **単一更新者**: 競合を防ぐため、更新責任者を1人に限定
-2. **情報集約**: 家老は全足軽の報告を受ける立場なので全体像を把握
+2. **情報集約**: 戦術長は全パイロットの報告を受ける立場なので全体像を把握
 3. **一貫性**: すべての更新が1つの品質ゲートを通過
-4. **割り込み防止**: 将軍が更新すると、殿の入力中に割り込む恐れあり
+4. **割り込み防止**: 艦長が更新すると、提督の入力中に割り込む恐れあり
 
 ---
 
 ## 🛠️ スキル
 
-初期状態ではスキルはありません。
-運用中にダッシュボード（dashboard.md）の「スキル化候補」から承認して増やしていきます。
+初期状態ではスキルはない。
+運用中にダッシュボード（dashboard.md）の「スキル化候補」から承認して増やしていく。
 
-スキルは `/スキル名` で呼び出し可能。将軍に「/スキル名 を実行」と伝えるだけ。
+スキルは `/スキル名` で呼び出し可能。艦長に「/スキル名 を実行」と伝えるだけである。
 
 ### スキルの思想
 
@@ -441,26 +441,26 @@ screenshot:
 **2. スキル取得の手順**
 
 ```
-足軽が作業中にパターンを発見
+パイロットが作業中にパターンを発見
     ↓
 dashboard.md の「スキル化候補」に上がる
     ↓
-殿（あなた）が内容を確認
+提督（あなた）が内容を確認
     ↓
-承認すれば家老に指示してスキルを作成
+承認すれば戦術長に指示してスキルを作成
 ```
 
-スキルはユーザ主導で増やすもの。自動で増えると管理不能になるため、「これは便利」と判断したものだけを残す。
+スキルはユーザ主導で増やすものである。自動で増えると管理不能になるため、「これは便利」と判断したものだけを残す。
 
 ---
 
 ## 🔌 MCPセットアップガイド
 
-MCP（Model Context Protocol）サーバはClaudeの機能を拡張します。セットアップ方法：
+MCP（Model Context Protocol）サーバはClaudeの機能を拡張する。セットアップ方法：
 
 ### MCPとは？
 
-MCPサーバはClaudeに外部ツールへのアクセスを提供します：
+MCPサーバはClaudeに外部ツールへのアクセスを提供する：
 - **Notion MCP** → Notionページの読み書き
 - **GitHub MCP** → PR作成、Issue管理
 - **Memory MCP** → セッション間で記憶を保持
@@ -475,7 +475,7 @@ claude mcp add notion -e NOTION_TOKEN=your_token_here -- npx -y @notionhq/notion
 
 # 2. Playwright - ブラウザ自動化
 claude mcp add playwright -- npx @playwright/mcp@latest
-# 注意: 先に `npx playwright install chromium` を実行してください
+# 注意: 先に `npx playwright install chromium` を実行すること
 
 # 3. GitHub - リポジトリ操作
 claude mcp add github -e GITHUB_PERSONAL_ACCESS_TOKEN=your_pat_here -- npx -y @modelcontextprotocol/server-github
@@ -495,7 +495,7 @@ claude mcp add memory -e MEMORY_FILE_PATH="$PWD/memory/shogun_memory.jsonl" -- n
 claude mcp list
 ```
 
-全サーバが「Connected」ステータスで表示されるはずです。
+全サーバが「Connected」ステータスで表示されるはずである。
 
 ---
 
@@ -507,13 +507,13 @@ claude mcp list
 あなた: 「AIコーディングアシスタント上位5つを調査して比較せよ」
 
 実行される処理:
-1. 将軍が家老に委譲
-2. 家老が割り当て:
-   - 足軽1: GitHub Copilotを調査
-   - 足軽2: Cursorを調査
-   - 足軽3: Claude Codeを調査
-   - 足軽4: Codeiumを調査
-   - 足軽5: Amazon CodeWhispererを調査
+1. 艦長が戦術長に委譲
+2. 戦術長が割り当て:
+   - パイロット1: GitHub Copilotを調査
+   - パイロット2: Cursorを調査
+   - パイロット3: Claude Codeを調査
+   - パイロット4: Codeiumを調査
+   - パイロット5: Amazon CodeWhispererを調査
 3. 5体が同時に調査
 4. 結果がdashboard.mdに集約
 ```
@@ -524,10 +524,10 @@ claude mcp list
 あなた: 「このNotionページのプロジェクトでPoC準備: [URL]」
 
 実行される処理:
-1. 家老がMCP経由でNotionコンテンツを取得
-2. 足軽2: 確認すべき項目をリスト化
-3. 足軽3: 技術的な実現可能性を調査
-4. 足軽4: PoC計画書を作成
+1. 戦術長がMCP経由でNotionコンテンツを取得
+2. パイロット2: 確認すべき項目をリスト化
+3. パイロット3: 技術的な実現可能性を調査
+4. パイロット4: PoC計画書を作成
 5. 全結果がdashboard.mdに集約、会議の準備完了
 ```
 
@@ -575,8 +575,8 @@ language: en   # 日本語 + 英訳併記
 │  shutsujin_departure.sh                                             │
 │      │                                                              │
 │      ├──▶ tmuxセッションを作成                                       │
-│      │         • "shogun"セッション（1ペイン）                        │
-│      │         • "multiagent"セッション（9ペイン、3x3グリッド）        │
+│      │         • "bridge"セッション（1ペイン）                       │
+│      │         • "hangar"セッション（9ペイン、3x3グリッド）           │
 │      │                                                              │
 │      ├──▶ キューファイルとダッシュボードをリセット                     │
 │      │                                                              │
@@ -615,7 +615,7 @@ language: en   # 日本語 + 英訳併記
 **通常の毎日の使用：**
 ```bash
 ./shutsujin_departure.sh          # 全て起動
-tmux attach-session -t shogun     # 接続してコマンドを出す
+tmux attach-session -t bridge     # 接続してコマンドを出す
 ```
 
 **デバッグモード（手動制御）：**
@@ -623,15 +623,15 @@ tmux attach-session -t shogun     # 接続してコマンドを出す
 ./shutsujin_departure.sh -s       # セッションのみ作成
 
 # 特定のエージェントでClaude Codeを手動起動
-tmux send-keys -t shogun:0 'claude --dangerously-skip-permissions' Enter
-tmux send-keys -t multiagent:0.0 'claude --dangerously-skip-permissions' Enter
+tmux send-keys -t bridge:0 'claude --dangerously-skip-permissions' Enter
+tmux send-keys -t hangar:0.0 'claude --dangerously-skip-permissions' Enter
 ```
 
 **クラッシュ後の再起動：**
 ```bash
 # 既存セッションを終了
-tmux kill-session -t shogun
-tmux kill-session -t multiagent
+tmux kill-session -t bridge
+tmux kill-session -t hangar
 
 # 新しく起動
 ./shutsujin_departure.sh
@@ -642,14 +642,14 @@ tmux kill-session -t multiagent
 <details>
 <summary><b>便利なエイリアス</b>（クリックで展開）</summary>
 
-`first_setup.sh` を実行すると、以下のエイリアスが `~/.bashrc` に自動追加されます：
+`first_setup.sh` を実行すると、以下のエイリアスが `~/.bashrc` に自動追加される：
 
 ```bash
-alias css='tmux attach-session -t shogun'      # 将軍ウィンドウの起動
-alias csm='tmux attach-session -t multiagent'  # 家老・足軽ウィンドウの起動
+alias css='tmux attach-session -t bridge'      # 艦長ウィンドウの起動
+alias csm='tmux attach-session -t hangar'  # 戦術長・パイロットウィンドウの起動
 ```
 
-※ エイリアスを反映するには `source ~/.bashrc` を実行するか、PowerShellで `wsl --shutdown` してからターミナルを開き直してください。
+※ エイリアスを反映するには `source ~/.bashrc` を実行するか、PowerShellで `wsl --shutdown` してからターミナルを開き直すこと。
 
 </details>
 
@@ -661,7 +661,7 @@ alias csm='tmux attach-session -t multiagent'  # 家老・足軽ウィンドウ�
 <summary><b>クリックでファイル構成を展開</b></summary>
 
 ```
-multi-agent-shogun/
+multi-agent-bridge/
 │
 │  ┌─────────────────── セットアップスクリプト ───────────────────┐
 ├── install.bat               # Windows: 初回セットアップ
@@ -670,9 +670,9 @@ multi-agent-shogun/
 │  └────────────────────────────────────────────────────────────┘
 │
 ├── instructions/             # エージェント指示書
-│   ├── shogun.md             # 将軍の指示書
-│   ├── karo.md               # 家老の指示書
-│   └── ashigaru.md           # 足軽の指示書
+│   ├── shogun.md             # 艦長の指示書
+│   ├── karo.md               # 戦術長の指示書
+│   └── ashigaru.md           # パイロットの指示書
 │
 ├── config/
 │   └── settings.yaml         # 言語その他の設定
@@ -681,7 +681,7 @@ multi-agent-shogun/
 │   └── <project_id>.yaml   # 各プロジェクトの全情報（クライアント、タスク、Notion連携等）
 │
 ├── queue/                    # 通信ファイル
-│   ├── shogun_to_karo.yaml   # 将軍から家老へのコマンド
+│   ├── shogun_to_karo.yaml   # 艦長から戦術長へのコマンド
 │   ├── tasks/                # 各ワーカーのタスクファイル
 │   └── reports/              # ワーカーレポート
 │
@@ -733,7 +733,7 @@ current_tasks:
     status: in_progress
 ```
 
-この分離設計により、将軍システムは複数の外部プロジェクトを横断的に統率しつつ、プロジェクトの詳細情報はバージョン管理の対象外に保つことができる。
+この分離設計により、bridgeシステムは複数の外部プロジェクトを横断的に統率しつつ、プロジェクトの詳細情報はバージョン管理の対象外に保つことができる。
 
 ---
 
@@ -742,7 +742,7 @@ current_tasks:
 <details>
 <summary><b>MCPツールが動作しない？</b></summary>
 
-MCPツールは「遅延ロード」方式で、最初にロードが必要です：
+MCPツールは「遅延ロード」方式で、最初にロードが必要である：
 
 ```
 # 間違い - ツールがロードされていない
@@ -771,7 +771,7 @@ claude --dangerously-skip-permissions --system-prompt "..."
 
 ワーカーのペインを確認：
 ```bash
-tmux attach-session -t multiagent
+tmux attach-session -t hangar
 # Ctrl+B の後に数字でペインを切り替え
 ```
 
@@ -783,16 +783,16 @@ tmux attach-session -t multiagent
 
 | コマンド | 説明 |
 |----------|------|
-| `tmux attach -t shogun` | 将軍に接続 |
-| `tmux attach -t multiagent` | ワーカーに接続 |
+| `tmux attach -t bridge` | 艦長に接続 |
+| `tmux attach -t hangar` | ワーカーに接続 |
 | `Ctrl+B` の後 `0-8` | ペイン間を切り替え |
 | `Ctrl+B` の後 `d` | デタッチ（実行継続） |
-| `tmux kill-session -t shogun` | 将軍セッションを停止 |
-| `tmux kill-session -t multiagent` | ワーカーセッションを停止 |
+| `tmux kill-session -t bridge` | 艦長セッションを停止 |
+| `tmux kill-session -t hangar` | ワーカーセッションを停止 |
 
 ### 🖱️ マウス操作
 
-`first_setup.sh` が `~/.tmux.conf` に `set -g mouse on` を自動設定するため、マウスによる直感的な操作が可能です：
+`first_setup.sh` が `~/.tmux.conf` に `set -g mouse on` を自動設定するため、マウスによる直感的な操作が可能である：
 
 | 操作 | 説明 |
 |------|------|
@@ -800,7 +800,7 @@ tmux attach-session -t multiagent
 | ペインをクリック | ペイン間のフォーカス切替 |
 | ペイン境界をドラッグ | ペインのリサイズ |
 
-キーボード操作に不慣れな場合でも、マウスだけでペインの切替・スクロール・リサイズが行えます。
+キーボード操作に不慣れな場合でも、マウスだけでペインの切替・スクロール・リサイズが行える。
 
 ---
 
@@ -818,6 +818,6 @@ MIT License - 詳細は [LICENSE](LICENSE) を参照。
 
 <div align="center">
 
-**AIの軍勢を統率せよ。より速く構築せよ。**
+**AI艦隊を統率せよ。より速く構築せよ。**
 
 </div>

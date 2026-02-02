@@ -1,4 +1,4 @@
-# multi-agent-shogun
+# multi-agent-bridge
 
 <div align="center">
 
@@ -18,30 +18,30 @@
 
 ## What is this?
 
-**multi-agent-shogun** is a system that runs multiple Claude Code instances simultaneously, organized like a feudal Japanese army.
+**multi-agent-bridge** is a system that runs multiple Claude Code instances simultaneously, organized like a UC Gundam-style space military fleet.
 
 **Why use this?**
-- Give one command, get 8 AI workers executing in parallel
+- Give one command, get 8 AI pilots executing in parallel
 - No waiting - you can keep giving commands while tasks run in background
 - AI remembers your preferences across sessions (Memory MCP)
 - Real-time progress tracking via dashboard
 
 ```
-        You (The Lord)
+        You (The Admiral)
              │
              ▼ Give orders
       ┌─────────────┐
-      │   SHOGUN    │  ← Receives your command, delegates immediately
+      │   CAPTAIN   │  ← Receives your command, delegates immediately
       └──────┬──────┘
              │ YAML files + tmux
       ┌──────▼──────┐
-      │    KARO     │  ← Distributes tasks to workers
+      │  TACTICAL   │  ← Distributes tasks to pilots
       └──────┬──────┘
              │
     ┌─┬─┬─┬─┴─┬─┬─┬─┐
-    │1│2│3│4│5│6│7│8│  ← 8 workers execute in parallel
+    │1│2│3│4│5│6│7│8│  ← 8 pilots execute in parallel
     └─┴─┴─┴─┴─┴─┴─┴─┘
-        ASHIGARU
+        PILOTS
 ```
 
 ---
@@ -61,9 +61,9 @@
 
 📥 **Download this repository**
 
-[Download ZIP](https://github.com/yohey-w/multi-agent-shogun/archive/refs/heads/main.zip) and extract to `C:\tools\multi-agent-shogun`
+[Download ZIP](https://github.com/yohey-w/multi-agent-bridge/archive/refs/heads/main.zip) and extract to `C:\tools\multi-agent-bridge`
 
-*Or use git:* `git clone https://github.com/yohey-w/multi-agent-shogun.git C:\tools\multi-agent-shogun`
+*Or use git:* `git clone https://github.com/yohey-w/multi-agent-bridge.git C:\tools\multi-agent-bridge`
 
 </td>
 </tr>
@@ -92,7 +92,7 @@ Right-click and select **"Run as administrator"** (required if WSL2 is not yet i
 🐧 **Open Ubuntu and run** (first time only)
 
 ```bash
-cd /mnt/c/tools/multi-agent-shogun
+cd /mnt/c/tools/multi-agent-bridge
 ./first_setup.sh
 ```
 
@@ -106,7 +106,7 @@ cd /mnt/c/tools/multi-agent-shogun
 </td>
 <td>
 
-✅ **Deploy!**
+✅ **Launch!**
 
 ```bash
 ./shutsujin_departure.sh
@@ -121,7 +121,7 @@ cd /mnt/c/tools/multi-agent-shogun
 Open **Ubuntu terminal** (WSL) and run:
 
 ```bash
-cd /mnt/c/tools/multi-agent-shogun
+cd /mnt/c/tools/multi-agent-bridge
 ./shutsujin_departure.sh
 ```
 
@@ -134,8 +134,8 @@ cd /mnt/c/tools/multi-agent-shogun
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yohey-w/multi-agent-shogun.git ~/multi-agent-shogun
-cd ~/multi-agent-shogun
+git clone https://github.com/yohey-w/multi-agent-bridge.git ~/multi-agent-bridge
+cd ~/multi-agent-bridge
 
 # 2. Make scripts executable
 chmod +x *.sh
@@ -147,7 +147,7 @@ chmod +x *.sh
 ### Daily Startup
 
 ```bash
-cd ~/multi-agent-shogun
+cd ~/multi-agent-bridge
 ./shutsujin_departure.sh
 ```
 
@@ -195,7 +195,7 @@ Then restart your computer and run `install.bat` again.
 - ✅ Guides you to the next steps (`first_setup.sh`)
 
 ### What `shutsujin_departure.sh` does:
-- ✅ Creates tmux sessions (shogun + multiagent)
+- ✅ Creates tmux sessions (bridge + hangar)
 - ✅ Launches Claude Code on all agents
 - ✅ Automatically loads instruction files for each agent
 - ✅ Resets queue files for a fresh start
@@ -229,42 +229,42 @@ After running either option, **AI agents** will start automatically:
 
 | Agent | Role | Quantity |
 |-------|------|----------|
-| 🏯 Shogun | Commander - receives your orders | 1 |
-| 📋 Karo | Manager - distributes tasks | 1 |
-| ⚔️ Ashigaru | Workers - execute tasks in parallel | 8 |
+| 🚀 Captain | Commander - receives your orders | 1 |
+| 📋 Tactical Officer | Manager - distributes tasks | 1 |
+| 🛸 Pilot | Mobile suit operators - execute tasks in parallel | 8 |
 
 You'll see tmux sessions created:
-- `shogun` - Connect here to give commands
-- `multiagent` - Workers running in background
+- `bridge` - Connect here to give commands
+- `hangar` - Pilots running in background
 
 ---
 
 ## 📖 Basic Usage
 
-### Step 1: Connect to Shogun
+### Step 1: Connect to the Captain
 
 After running `shutsujin_departure.sh`, all agents automatically load their instructions and are ready to work.
 
-Open a new terminal and connect to the Shogun:
+Open a new terminal and connect to the Captain:
 
 ```bash
-tmux attach-session -t shogun
+tmux attach-session -t bridge
 ```
 
 ### Step 2: Give Your First Order
 
-The Shogun is already initialized! Just give your command:
+The Captain is already initialized! Just give your command:
 
 ```
 Investigate the top 5 JavaScript frameworks and create a comparison table.
 ```
 
-The Shogun will:
+The Captain will:
 1. Write the task to a YAML file
-2. Notify the Karo (manager)
+2. Notify the Tactical Officer (manager)
 3. Return control to you immediately (you don't have to wait!)
 
-Meanwhile, the Karo distributes the work to Ashigaru workers who execute in parallel.
+Meanwhile, the Tactical Officer distributes the work to Pilots who execute in parallel.
 
 ### Step 3: Check Progress
 
@@ -272,11 +272,11 @@ Open `dashboard.md` in your editor to see real-time status:
 
 ```markdown
 ## In Progress
-| Worker | Task | Status |
-|--------|------|--------|
-| Ashigaru 1 | React research | Running |
-| Ashigaru 2 | Vue research | Running |
-| Ashigaru 3 | Angular research | Done |
+| Pilot | Task | Status |
+|-------|------|--------|
+| Pilot 1 | React research | Running |
+| Pilot 2 | Vue research | Running |
+| Pilot 3 | Angular research | Done |
 ```
 
 ---
@@ -285,22 +285,22 @@ Open `dashboard.md` in your editor to see real-time status:
 
 ### ⚡ 1. Parallel Execution
 
-One command can spawn up to 8 parallel tasks:
+One command can sortie up to 8 parallel tasks:
 
 ```
 You: "Research 5 MCP servers"
-→ 5 Ashigaru start researching simultaneously
+→ 5 Pilots start researching simultaneously
 → Results ready in minutes, not hours
 ```
 
 ### 🔄 2. Non-Blocking Workflow
 
-The Shogun delegates immediately and returns control to you:
+The Captain delegates immediately and returns control to you:
 
 ```
-You: Give order → Shogun: Delegates → You: Can give next order immediately
+You: Give order → Captain: Delegates → You: Can give next order immediately
                                            ↓
-                         Workers: Execute in background
+                         Pilots: Execute in background
                                            ↓
                          Dashboard: Shows results
 ```
@@ -333,7 +333,7 @@ VSCode's Claude Code extension lets you paste screenshots to explain issues. Thi
 screenshot:
   path: "/mnt/c/Users/YourName/Pictures/Screenshots"
 
-# Then just tell the Shogun:
+# Then just tell the Captain:
 You: "Check the latest screenshot"
 You: "Look at the last 2 screenshots"
 → AI reads and analyzes your screenshots instantly
@@ -350,11 +350,11 @@ Perfect for:
 
 | Agent | Model | Thinking | Reason |
 |-------|-------|----------|--------|
-| Shogun | Opus | Disabled | Delegation & dashboard updates don't need deep reasoning |
-| Karo | Default | Enabled | Task distribution requires careful judgment |
-| Ashigaru | Default | Enabled | Actual implementation needs full capabilities |
+| Captain | Opus | Disabled | Delegation & dashboard updates don't need deep reasoning |
+| Tactical Officer | Default | Enabled | Task distribution requires careful judgment |
+| Pilot | Default | Enabled | Actual implementation needs full capabilities |
 
-The Shogun uses `MAX_THINKING_TOKENS=0` to disable extended thinking, reducing latency and cost while maintaining Opus-level judgment for high-level decisions.
+The Captain uses `MAX_THINKING_TOKENS=0` to disable extended thinking, reducing latency and cost while maintaining Opus-level judgment for high-level decisions.
 
 ### 📁 Context Management
 
@@ -367,7 +367,7 @@ The system uses a three-layer context structure for efficient knowledge sharing:
 | Project | `context/{project}.md` | Project-specific knowledge and state |
 
 This design allows:
-- Any Ashigaru to pick up work on any project
+- Any Pilot to pick up work on any project
 - Consistent context across agent switches
 - Clear separation of concerns
 - Knowledge persistence across sessions
@@ -389,7 +389,7 @@ All projects use the same 7-section template:
 This standardized structure ensures:
 - Quick onboarding for any agent
 - Consistent information across all projects
-- Easy handoffs between Ashigaru workers
+- Easy handoffs between Pilots
 
 ### 🛠️ Skills
 
@@ -397,7 +397,7 @@ Skills are not included in this repository by default.
 As you use the system, skill candidates will appear in `dashboard.md`.
 Review and approve them to grow your personal skill library.
 
-Skills can be invoked with `/skill-name`. Just tell the Shogun: "run `/skill-name`".
+Skills can be invoked with `/skill-name`. Just tell the Captain: "run `/skill-name`".
 
 ---
 
@@ -405,28 +405,28 @@ Skills can be invoked with `/skill-name`. Just tell the Shogun: "run `/skill-nam
 
 ### Why Hierarchical Structure?
 
-The Shogun → Karo → Ashigaru hierarchy exists for:
+The Captain → Tactical Officer → Pilot hierarchy exists for:
 
-1. **Immediate Response**: Shogun delegates instantly and returns control to you
-2. **Parallel Execution**: Karo distributes to multiple Ashigaru simultaneously
-3. **Separation of Concerns**: Each role is clearly defined — Shogun decides "what", Karo decides "who"
-4. **Scalability**: Adding more Ashigaru doesn't break the structure
-5. **Fault Isolation**: One Ashigaru failing doesn't affect others
-6. **Centralized Reporting**: Only Shogun communicates with you, keeping information organized
+1. **Immediate Response**: Captain delegates instantly and returns control to you
+2. **Parallel Execution**: Tactical Officer distributes to multiple Pilots simultaneously
+3. **Separation of Concerns**: Each role is clearly defined — Captain decides "what", Tactical Officer decides "who"
+4. **Scalability**: Adding more Pilots doesn't break the structure
+5. **Fault Isolation**: One Pilot failing doesn't affect others
+6. **Centralized Briefing**: Only Captain communicates with you, keeping information organized
 
 ### Why YAML + send-keys?
 
 - **YAML files**: Structured communication that survives agent restarts and is human-readable for debugging
 - **send-keys**: Event-driven wakeups (no polling = no wasted API calls)
 - **No direct calls**: Agents can't interrupt each other or your input
-- **Conflict avoidance**: Each Ashigaru has dedicated files, preventing race conditions
+- **Conflict avoidance**: Each Pilot has dedicated files, preventing race conditions
 
-### Why Only Karo Updates Dashboard?
+### Why Only Tactical Officer Updates Dashboard?
 
 - **Single responsibility**: One writer = no conflicts
-- **Information hub**: Karo receives all reports, knows the full picture
+- **Information hub**: Tactical Officer receives all briefings, knows the full picture
 - **Consistency**: All updates go through one quality gate
-- **No interruptions**: Prevents disrupting your input when Shogun would otherwise update the dashboard
+- **No interruptions**: Prevents disrupting your input when Captain would otherwise update the dashboard
 
 ### How Skills Work
 
@@ -440,13 +440,13 @@ Skills (`.claude/commands/`) are **not committed to this repository** by design.
 **How to create new skills:**
 
 ```
-Ashigaru notices a repeatable pattern during work
+Pilot notices a repeatable pattern during work
     ↓
 Candidate appears in dashboard.md under "Skill Candidates"
     ↓
-You (the Lord) review the candidate
+You (the Admiral) review the candidate
     ↓
-If approved, Karo creates the skill
+If approved, Tactical Officer creates the skill
 ```
 
 Skills are **user-driven** — they only grow when you decide they're useful. Automatic growth would make them unmanageable, so only what you explicitly approve gets added.
@@ -506,13 +506,13 @@ You should see all servers with "Connected" status.
 You: "Research the top 5 AI coding assistants and compare them"
 
 What happens:
-1. Shogun delegates to Karo
-2. Karo assigns:
-   - Ashigaru 1: Research GitHub Copilot
-   - Ashigaru 2: Research Cursor
-   - Ashigaru 3: Research Claude Code
-   - Ashigaru 4: Research Codeium
-   - Ashigaru 5: Research Amazon CodeWhisperer
+1. Captain delegates to Tactical Officer
+2. Tactical Officer assigns:
+   - Pilot 1: Research GitHub Copilot
+   - Pilot 2: Research Cursor
+   - Pilot 3: Research Claude Code
+   - Pilot 4: Research Codeium
+   - Pilot 5: Research Amazon CodeWhisperer
 3. All 5 research simultaneously
 4. Results compiled in dashboard.md
 ```
@@ -523,11 +523,11 @@ What happens:
 You: "Prepare a PoC for the project in this Notion page: [URL]"
 
 What happens:
-1. Karo fetches Notion content via MCP
-2. Ashigaru 2: Lists items to clarify
-3. Ashigaru 3: Researches technical feasibility
-4. Ashigaru 4: Creates PoC plan document
-5. All results in dashboard.md, ready for your meeting
+1. Tactical Officer fetches Notion content via MCP
+2. Pilot 2: Lists items to clarify
+3. Pilot 3: Researches technical feasibility
+4. Pilot 4: Creates PoC plan document
+5. All results in dashboard.md, ready for your strategic briefing
 ```
 
 ---
@@ -574,8 +574,8 @@ language: en   # Japanese + English translation
 │  shutsujin_departure.sh                                             │
 │      │                                                              │
 │      ├──▶ Create tmux sessions                                      │
-│      │         • "shogun" session (1 pane)                          │
-│      │         • "multiagent" session (9 panes, 3x3 grid)           │
+│      │         • "bridge" session (1 pane)                          │
+│      │         • "hangar" session (9 panes, 3x3 grid)              │
 │      │                                                              │
 │      ├──▶ Reset queue files and dashboard                           │
 │      │                                                              │
@@ -614,7 +614,7 @@ language: en   # Japanese + English translation
 **Normal Daily Usage:**
 ```bash
 ./shutsujin_departure.sh          # Start everything
-tmux attach-session -t shogun     # Connect to give commands
+tmux attach-session -t bridge     # Connect to give commands
 ```
 
 **Debug Mode (manual control):**
@@ -622,15 +622,15 @@ tmux attach-session -t shogun     # Connect to give commands
 ./shutsujin_departure.sh -s       # Create sessions only
 
 # Manually start Claude Code on specific agents
-tmux send-keys -t shogun:0 'claude --dangerously-skip-permissions' Enter
-tmux send-keys -t multiagent:0.0 'claude --dangerously-skip-permissions' Enter
+tmux send-keys -t bridge:0 'claude --dangerously-skip-permissions' Enter
+tmux send-keys -t hangar:0.0 'claude --dangerously-skip-permissions' Enter
 ```
 
 **Restart After Crash:**
 ```bash
 # Kill existing sessions
-tmux kill-session -t shogun
-tmux kill-session -t multiagent
+tmux kill-session -t bridge
+tmux kill-session -t hangar
 
 # Start fresh
 ./shutsujin_departure.sh
@@ -644,8 +644,8 @@ tmux kill-session -t multiagent
 Running `first_setup.sh` automatically adds these aliases to `~/.bashrc`:
 
 ```bash
-alias css='cd /mnt/c/tools/multi-agent-shogun && ./shutsujin_departure.sh'  # Setup + deploy
-alias csm='cd /mnt/c/tools/multi-agent-shogun'                              # Navigate to directory only
+alias css='cd /mnt/c/tools/multi-agent-bridge && ./shutsujin_departure.sh'  # Setup + launch
+alias csm='cd /mnt/c/tools/multi-agent-bridge'                              # Navigate to directory only
 ```
 
 *To apply aliases, run `source ~/.bashrc` or restart your terminal. On WSL, run `wsl --shutdown` in PowerShell first — simply closing the window does not terminate WSL.*
@@ -660,7 +660,7 @@ alias csm='cd /mnt/c/tools/multi-agent-shogun'                              # Na
 <summary><b>Click to expand file structure</b></summary>
 
 ```
-multi-agent-shogun/
+multi-agent-bridge/
 │
 │  ┌─────────────────── SETUP SCRIPTS ───────────────────┐
 ├── install.bat               # Windows: First-time setup
@@ -669,9 +669,9 @@ multi-agent-shogun/
 │  └────────────────────────────────────────────────────┘
 │
 ├── instructions/             # Agent instruction files
-│   ├── shogun.md             # Commander instructions
-│   ├── karo.md               # Manager instructions
-│   └── ashigaru.md           # Worker instructions
+│   ├── shogun.md             # Captain instructions
+│   ├── karo.md               # Tactical Officer instructions
+│   └── ashigaru.md           # Pilot instructions
 │
 ├── config/
 │   └── settings.yaml         # Language and other settings
@@ -680,9 +680,9 @@ multi-agent-shogun/
 │   └── <project_id>.yaml   # Full project info (client, tasks, Notion links, etc.)
 │
 ├── queue/                    # Communication files
-│   ├── shogun_to_karo.yaml   # Commands from Shogun to Karo
-│   ├── tasks/                # Individual worker task files
-│   └── reports/              # Worker reports
+│   ├── shogun_to_karo.yaml   # Commands from Captain to Tactical Officer
+│   ├── tasks/                # Individual pilot task files
+│   └── reports/              # Pilot briefings
 │
 ├── memory/                   # Memory MCP storage
 ├── dashboard.md              # Real-time status overview
@@ -732,7 +732,7 @@ current_tasks:
     status: in_progress
 ```
 
-This separation allows the Shogun system to orchestrate tasks across multiple external projects while keeping project details private and out of version control.
+This separation allows the bridge system to orchestrate tasks across multiple external projects while keeping project details private and out of version control.
 
 ---
 
@@ -766,11 +766,11 @@ claude --dangerously-skip-permissions --system-prompt "..."
 </details>
 
 <details>
-<summary><b>Workers stuck?</b></summary>
+<summary><b>Pilots stuck?</b></summary>
 
-Check the worker's pane:
+Check the pilot's pane:
 ```bash
-tmux attach-session -t multiagent
+tmux attach-session -t hangar
 # Use Ctrl+B then number to switch panes
 ```
 
@@ -782,12 +782,12 @@ tmux attach-session -t multiagent
 
 | Command | Description |
 |---------|-------------|
-| `tmux attach -t shogun` | Connect to Shogun |
-| `tmux attach -t multiagent` | Connect to workers |
+| `tmux attach -t bridge` | Connect to Captain |
+| `tmux attach -t hangar` | Connect to pilots |
 | `Ctrl+B` then `0-8` | Switch between panes |
 | `Ctrl+B` then `d` | Detach (leave running) |
-| `tmux kill-session -t shogun` | Stop Shogun session |
-| `tmux kill-session -t multiagent` | Stop worker sessions |
+| `tmux kill-session -t bridge` | Stop bridge session |
+| `tmux kill-session -t hangar` | Stop hangar session |
 
 ### 🖱️ Mouse Support
 
@@ -817,6 +817,6 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 <div align="center">
 
-**Command your AI army. Build faster.**
+**Command your AI fleet. Build faster.**
 
 </div>

@@ -78,24 +78,24 @@ description: {いつこのスキルを使うか、具体的なユースケース
    - エッジケースの対処
 
 5. 保存
-   - パス: ~/.claude/skills/shogun-{skill-name}/
+   - パス: ~/.claude/skills/bridge-{skill-name}/
    - 既存スキルと名前が被らないか確認
 
 ## 使用フロー
 
-このスキルはKaroがShogunからの指示を受けて使用する。
+このスキルはTactical（戦術長）がCaptain（艦長）からの指示を受けて使用する。
 
-1. Ashigaruがスキル化候補を発見 → Karoに報告
-2. Karo → Shogunに報告
-3. **Shogunが最新仕様をリサーチし、スキル設計を行う**
-4. Shogunが人間に承認を依頼（dashboard.md経由）
+1. Pilot（パイロット）がスキル化候補を発見 → Tactical（戦術長）に報告
+2. Tactical（戦術長） → Captain（艦長）に報告
+3. **Captain（艦長）が最新仕様をリサーチし、スキル設計を行う**
+4. Captain（艦長）が人間に承認を依頼（dashboard.md経由）
 5. 人間が承認
-6. Shogun → Karoに作成を指示（設計書付き）
-7. **Karo がこのskill-creatorを使用してスキルを作成**
+6. Captain（艦長） → Tactical（戦術長）に作成を指示（設計書付き）
+7. **Tactical（戦術長） がこのskill-creatorを使用してスキルを作成**
 8. 完了報告
 
-※ Shogunがリサーチした最新仕様に基づいて作成すること。
-※ Shogunからの設計書に従うこと。
+※ Captain（艦長）がリサーチした最新仕様に基づいて作成すること。
+※ Captain（艦長）からの設計書に従うこと。
 
 ## Examples of Good Skills
 
@@ -127,7 +127,7 @@ description: 入力データのバリデーションパターン集。メール�
 
 スキル生成時は以下の形式で報告：
 
-「はっ！(Ha!) 新たなる技を編み出しました(New skill created!)
+「了解！新スキルを生成した。
 - スキル名: {name}
 - 用途: {description}
 - 保存先: {path}」

@@ -1,10 +1,10 @@
 @echo off
 chcp 65001 >nul 2>&1
-title multi-agent-shogun Installer
+title multi-agent-bridge Installer
 
 echo.
 echo   +============================================================+
-echo   ^|  [SHOGUN] multi-agent-shogun - WSL Installer                ^|
+echo   ^|  [BRIDGE] multi-agent-bridge - WSL Installer                ^|
 echo   ^|           WSL2 + Ubuntu セットアップ                       ^|
 echo   +============================================================+
 echo.
