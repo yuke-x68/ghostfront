@@ -38,5 +38,9 @@ status/
 config/settings.yaml
 logs/
 
+# Shared files (external repos, large files - local only)
+shared/*
+!shared/README.md
+
 # Project details (contains client/confidential info)
 projects/
