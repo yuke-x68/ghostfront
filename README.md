@@ -362,7 +362,7 @@ The system uses a three-layer context structure for efficient knowledge sharing:
 
 | Layer | Location | Purpose |
 |-------|----------|---------|
-| Memory MCP | `memory/shogun_memory.jsonl` | Persistent memory across sessions (preferences, decisions) |
+| Memory MCP | `memory/bridge_memory.jsonl` | Persistent memory across sessions (preferences, decisions) |
 | Global | `memory/global_context.md` | System-wide settings, user preferences |
 | Project | `context/{project}.md` | Project-specific knowledge and state |
 
@@ -485,7 +485,7 @@ claude mcp add sequential-thinking -- npx -y @modelcontextprotocol/server-sequen
 # 5. Memory - Long-term memory across sessions (Recommended!)
 # ✅ Automatically configured by first_setup.sh
 # To reconfigure manually:
-claude mcp add memory -e MEMORY_FILE_PATH="$PWD/memory/shogun_memory.jsonl" -- npx -y @modelcontextprotocol/server-memory
+claude mcp add memory -e MEMORY_FILE_PATH="$PWD/memory/bridge_memory.jsonl" -- npx -y @modelcontextprotocol/server-memory
 ```
 
 ### Verify Installation
@@ -669,9 +669,9 @@ multi-agent-bridge/
 │  └────────────────────────────────────────────────────┘
 │
 ├── instructions/             # Agent instruction files
-│   ├── shogun.md             # Captain instructions
-│   ├── karo.md               # Tactical Officer instructions
-│   └── ashigaru.md           # Pilot instructions
+│   ├── captain.md            # Captain instructions
+│   ├── tactical.md           # Tactical Officer instructions
+│   └── pilot.md              # Pilot instructions
 │
 ├── config/
 │   └── settings.yaml         # Language and other settings
@@ -680,7 +680,7 @@ multi-agent-bridge/
 │   └── <project_id>.yaml   # Full project info (client, tasks, Notion links, etc.)
 │
 ├── queue/                    # Communication files
-│   ├── shogun_to_karo.yaml   # Commands from Captain to Tactical Officer
+│   ├── captain_to_tactical.yaml  # Commands from Captain to Tactical Officer
 │   ├── tasks/                # Individual pilot task files
 │   └── reports/              # Pilot briefings
 │

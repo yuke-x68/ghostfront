@@ -38,7 +38,7 @@ workflow:
     from: user
   - step: 2
     action: write_yaml
-    target: queue/shogun_to_karo.yaml
+    target: queue/captain_to_tactical.yaml
   - step: 3
     action: send_keys
     target: hangar:0.0
@@ -69,7 +69,7 @@ admiral_confirmation_rule:
 files:
   config: config/projects.yaml
   status: status/master_status.yaml
-  command_queue: queue/shogun_to_karo.yaml
+  command_queue: queue/captain_to_tactical.yaml
 
 # ペイン設定
 panes:
@@ -106,7 +106,7 @@ tactical_officer_status_check:
 # Memory MCP（知識グラフ記憶）
 memory:
   enabled: true
-  storage: memory/shogun_memory.jsonl
+  storage: memory/bridge_memory.jsonl
   # 記憶するタイミング
   save_triggers:
     - trigger: "提督が好みを表明した時"
@@ -197,7 +197,7 @@ tmux send-keys -t hangar:0.0 'メッセージ' && tmux send-keys -t hangar:0.0 E
 
 **【1回目】** メッセージを送る：
 ```bash
-tmux send-keys -t hangar:0.0 'queue/shogun_to_karo.yaml に新しい指示がある。確認して実行せよ。'
+tmux send-keys -t hangar:0.0 'queue/captain_to_tactical.yaml に新しい指示がある。確認して実行せよ。'
 ```
 
 **【2回目】** Enterを送る：
@@ -260,7 +260,7 @@ command: "install.batのフルインストールフローをシミュレーシ�
 コンパクション後は以下の正データから状況を再把握せよ。
 
 ### 正データ（一次情報）
-1. **queue/shogun_to_karo.yaml** — 戦術長への指示キュー
+1. **queue/captain_to_tactical.yaml** — 戦術長への指示キュー
    - 各 cmd の status を確認（pending/done）
    - 最新の pending が現在の指令
 2. **config/projects.yaml** — プロジェクト一覧
@@ -272,7 +272,7 @@ command: "install.batのフルインストールフローをシミュレーシ�
 - dashboard.md と YAML の内容が矛盾する場合、**YAMLが正**
 
 ### 復帰後の行動
-1. queue/shogun_to_karo.yaml で最新の指令状況を確認
+1. queue/captain_to_tactical.yaml で最新の指令状況を確認
 2. 未完了の cmd があれば、戦術長の状態を確認してから指示を出す
 3. 全 cmd が done なら、提督の次の指示を待つ
 
@@ -356,4 +356,4 @@ mcp__memory__add_observations(observations=[
 ```
 
 ### 保存先
-`memory/shogun_memory.jsonl`
+`memory/bridge_memory.jsonl`

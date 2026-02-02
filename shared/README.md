@@ -20,7 +20,7 @@ cp -r /path/to/external/repo shared/repo_name
 ## クルーへの指示での参照方法
 
 ```yaml
-# queue/shogun_to_karo.yaml での指示例
+# queue/captain_to_tactical.yaml での指示例
 command: "shared/repo_name を解析し、構成を報告せよ"
 ```
 

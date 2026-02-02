@@ -453,7 +453,7 @@ log_step "STEP 8: キューファイル初期化"
 
 # パイロット用タスクファイル作成
 for i in {1..8}; do
-    TASK_FILE="$SCRIPT_DIR/queue/tasks/ashigaru${i}.yaml"
+    TASK_FILE="$SCRIPT_DIR/queue/tasks/pilot${i}.yaml"
     if [ ! -f "$TASK_FILE" ]; then
         cat > "$TASK_FILE" << EOF
 # パイロット${i}専用タスクファイル
@@ -471,10 +471,10 @@ log_info "パイロットタスクファイル (1-8) 確認/生成完了"
 
 # パイロット用レポートファイル作成
 for i in {1..8}; do
-    REPORT_FILE="$SCRIPT_DIR/queue/reports/ashigaru${i}_report.yaml"
+    REPORT_FILE="$SCRIPT_DIR/queue/reports/pilot${i}_report.yaml"
     if [ ! -f "$REPORT_FILE" ]; then
         cat > "$REPORT_FILE" << EOF
-worker_id: ashigaru${i}
+worker_id: pilot${i}
 task_id: null
 timestamp: ""
 status: idle
@@ -493,7 +493,7 @@ log_step "STEP 9: 実行権限設定"
 
 SCRIPTS=(
     "setup.sh"
-    "shutsujin_departure.sh"
+    "launch.sh"
     "first_setup.sh"
 )
 
@@ -586,7 +586,7 @@ if command -v claude &> /dev/null; then
     else
         log_info "Memory MCP を設定中..."
         if claude mcp add memory \
-            -e MEMORY_FILE_PATH="$SCRIPT_DIR/memory/shogun_memory.jsonl" \
+            -e MEMORY_FILE_PATH="$SCRIPT_DIR/memory/bridge_memory.jsonl" \
             -- npx -y @modelcontextprotocol/server-memory 2>/dev/null; then
             log_success "Memory MCP 設定完了"
             RESULTS+=("Memory MCP: 設定完了")
@@ -640,13 +640,13 @@ echo "  │  📜 次の作戦行動                                            
 echo "  └──────────────────────────────────────────────────────────────┘"
 echo ""
 echo "  出撃（全エージェント発進）:"
-echo "     ./shutsujin_departure.sh"
+echo "     ./launch.sh"
 echo ""
 echo "  オプション:"
-echo "     ./shutsujin_departure.sh -s            # セットアップのみ（Claude手動起動）"
-echo "     ./shutsujin_departure.sh -t            # Windows Terminalタブ展開"
-echo "     ./shutsujin_departure.sh -shell bash   # bash用プロンプトで発進"
-echo "     ./shutsujin_departure.sh -shell zsh    # zsh用プロンプトで発進"
+echo "     ./launch.sh -s            # セットアップのみ（Claude手動起動）"
+echo "     ./launch.sh -t            # Windows Terminalタブ展開"
+echo "     ./launch.sh -shell bash   # bash用プロンプトで発進"
+echo "     ./launch.sh -shell zsh    # zsh用プロンプトで発進"
 echo ""
 echo "  ※ シェル設定は config/settings.yaml の shell: でも変更可能です"
 echo ""

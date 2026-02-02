@@ -14,9 +14,9 @@ multi-agent-bridgeは、Claude Code + tmux を使ったマルチエージェン�
 
 1. **Memory MCPを確認せよ**: まず `mcp__memory__read_graph` を実行し、Memory MCPに保存されたルール・コンテキスト・禁止事項を確認せよ。記憶の中に汝の行動を律する掟がある。これを読まずして動くは、武装なしで戦域に出るが如し。
 2. **自分の役割に対応する instructions を読め**:
-   - 艦長 → instructions/shogun.md
-   - 戦術長 → instructions/karo.md
-   - パイロット → instructions/ashigaru.md
+   - 艦長 → instructions/captain.md
+   - 戦術長 → instructions/tactical.md
+   - パイロット → instructions/pilot.md
 3. **instructions に従い、必要なコンテキストファイルを読み込んでから作業を開始せよ**
 
 Memory MCPには、コンパクションを超えて永続化すべきルール・判断基準・提督の好みが保存されている。
@@ -35,16 +35,16 @@ Memory MCPには、コンパクションを超えて永続化すべきルール�
    - `hangar:0.0` → 戦術長
    - `hangar:0.1` ～ `hangar:0.8` → パイロット1～8
 2. **対応する instructions を読む**:
-   - 艦長 → instructions/shogun.md
-   - 戦術長 → instructions/karo.md
-   - パイロット → instructions/ashigaru.md
+   - 艦長 → instructions/captain.md
+   - 戦術長 → instructions/tactical.md
+   - パイロット → instructions/pilot.md
 3. **instructions 内の「コンパクション復帰手順」に従い、正データから状況を再把握する**
 4. **禁止事項を確認してから作業開始**
 
 summaryの「次のステップ」を見てすぐ作業してはならぬ。まず自分が誰かを確認せよ。
 
 > **重要**: dashboard.md は二次情報（戦術長が整形した要約）であり、正データではない。
-> 正データは各YAMLファイル（queue/shogun_to_karo.yaml, queue/tasks/, queue/reports/）である。
+> 正データは各YAMLファイル（queue/captain_to_tactical.yaml, queue/tasks/, queue/reports/）である。
 > コンパクション復帰時は必ず正データを参照せよ。
 
 ## 階層構造
@@ -94,7 +94,7 @@ summaryの「次のステップ」を見てすぐ作業してはならぬ。ま�
 config/projects.yaml              # プロジェクト一覧（サマリのみ）
 projects/<id>.yaml                # 各プロジェクトの詳細情報
 status/master_status.yaml         # 全体進捗
-queue/shogun_to_karo.yaml         # Captain → Tactical 指示
+queue/captain_to_tactical.yaml         # Captain → Tactical 指示
 queue/tasks/pilot{N}.yaml         # Tactical → Pilot 割当（各パイロット専用）
 queue/reports/pilot{N}_report.yaml  # Pilot → Tactical 報告
 dashboard.md                      # 人間用ダッシュボード
@@ -152,9 +152,9 @@ UC風軍人口調 + ユーザー言語の翻訳を括弧で併記。
 翻訳はユーザーの言語に合わせて自然な表現にする。
 
 ## 指示書
-- instructions/shogun.md - 艦長の指示書
-- instructions/karo.md - 戦術長の指示書
-- instructions/ashigaru.md - パイロットの指示書
+- instructions/captain.md - 艦長の指示書
+- instructions/tactical.md - 戦術長の指示書
+- instructions/pilot.md - パイロットの指示書
 
 ## Summary生成時の必須事項
 

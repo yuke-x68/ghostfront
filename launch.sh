@@ -3,9 +3,9 @@
 # Daily Launch Script for Multi-Agent Orchestration System
 #
 # 使用方法:
-#   ./shutsujin_departure.sh           # 全エージェント起動（通常）
-#   ./shutsujin_departure.sh -s        # セットアップのみ（Claude起動なし）
-#   ./shutsujin_departure.sh -h        # ヘルプ表示
+#   ./launch.sh           # 全エージェント起動（通常）
+#   ./launch.sh -s        # セットアップのみ（Claude起動なし）
+#   ./launch.sh -h        # ヘルプ表示
 
 set -e
 
@@ -98,7 +98,7 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "🚀 multi-agent-bridge 出撃スクリプト"
             echo ""
-            echo "使用方法: ./shutsujin_departure.sh [オプション]"
+            echo "使用方法: ./launch.sh [オプション]"
             echo ""
             echo "オプション:"
             echo "  -s, --setup-only    tmuxセッションのセットアップのみ（Claude起動なし）"
@@ -108,14 +108,14 @@ while [[ $# -gt 0 ]]; do
             echo "  -h, --help          このヘルプを表示"
             echo ""
             echo "例:"
-            echo "  ./shutsujin_departure.sh              # 全エージェント起動（通常の出撃）"
-            echo "  ./shutsujin_departure.sh -s           # セットアップのみ（手動でClaude起動）"
-            echo "  ./shutsujin_departure.sh -t           # 全エージェント起動 + ターミナルタブ展開"
-            echo "  ./shutsujin_departure.sh -shell bash  # bash用プロンプトで起動"
-            echo "  ./shutsujin_departure.sh -shell zsh   # zsh用プロンプトで起動"
+            echo "  ./launch.sh              # 全エージェント起動（通常の出撃）"
+            echo "  ./launch.sh -s           # セットアップのみ（手動でClaude起動）"
+            echo "  ./launch.sh -t           # 全エージェント起動 + ターミナルタブ展開"
+            echo "  ./launch.sh -shell bash  # bash用プロンプトで起動"
+            echo "  ./launch.sh -shell zsh   # zsh用プロンプトで起動"
             echo ""
             echo "エイリアス:"
-            echo "  csst  → cd /mnt/c/tools/multi-agent-shogun && ./shutsujin_departure.sh"
+            echo "  csst  → cd /mnt/c/tools/multi-agent-bridge && ./launch.sh"
             echo "  css   → tmux attach-session -t bridge"
             echo "  csm   → tmux attach-session -t hangar"
             echo ""
@@ -123,7 +123,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         *)
             echo "不明なオプション: $1"
-            echo "./shutsujin_departure.sh -h でヘルプを表示"
+            echo "./launch.sh -h でヘルプを表示"
             exit 1
             ;;
     esac
@@ -171,7 +171,7 @@ show_battle_cry() {
     echo -e "\033[1;34m  ║\033[0m                    \033[1;37m【 パイロット配備 ・ 八 機 展 開 】\033[0m                    \033[1;34m║\033[0m"
     echo -e "\033[1;34m  ╚═════════════════════════════════════════════════════════════════════════════╝\033[0m"
 
-    cat << 'ASHIGARU_EOF'
+    cat << 'PILOT_EOF'
 
        /\      /\      /\      /\      /\      /\      /\      /\
       /MS\    /MS\    /MS\    /MS\    /MS\    /MS\    /MS\    /MS\
@@ -181,7 +181,7 @@ show_battle_cry() {
      /    \  /    \  /    \  /    \  /    \  /    \  /    \  /    \
      [P-1]   [P-2]   [P-3]   [P-4]   [P-5]   [P-6]   [P-7]   [P-8]
 
-ASHIGARU_EOF
+PILOT_EOF
 
     echo -e "                    \033[1;36m「「「 了解！！ 全機発進する！！ 」」」\033[0m"
     echo ""
@@ -227,7 +227,7 @@ if [ "$NEED_BACKUP" = true ]; then
     cp "./dashboard.md" "$BACKUP_DIR/" 2>/dev/null || true
     cp -r "./queue/reports" "$BACKUP_DIR/" 2>/dev/null || true
     cp -r "./queue/tasks" "$BACKUP_DIR/" 2>/dev/null || true
-    cp "./queue/shogun_to_karo.yaml" "$BACKUP_DIR/" 2>/dev/null || true
+    cp "./queue/captain_to_tactical.yaml" "$BACKUP_DIR/" 2>/dev/null || true
     log_info "📦 前回のミッションログをバックアップ: $BACKUP_DIR"
 fi
 
@@ -242,7 +242,7 @@ log_info "📜 前回のブリーフィング記録を破棄中..."
 
 # パイロットタスクファイルリセット
 for i in {1..8}; do
-    cat > ./queue/tasks/ashigaru${i}.yaml << EOF
+    cat > ./queue/tasks/pilot${i}.yaml << EOF
 # パイロット${i}専用タスクファイル
 task:
   task_id: null
@@ -256,8 +256,8 @@ done
 
 # パイロットレポートファイルリセット
 for i in {1..8}; do
-    cat > ./queue/reports/ashigaru${i}_report.yaml << EOF
-worker_id: ashigaru${i}
+    cat > ./queue/reports/pilot${i}_report.yaml << EOF
+worker_id: pilot${i}
 task_id: null
 timestamp: ""
 status: idle
@@ -266,48 +266,48 @@ EOF
 done
 
 # コマンドキューリセット
-cat > ./queue/shogun_to_karo.yaml << 'EOF'
+cat > ./queue/captain_to_tactical.yaml << 'EOF'
 queue: []
 EOF
 
-cat > ./queue/karo_to_ashigaru.yaml << 'EOF'
+cat > ./queue/tactical_to_pilot.yaml << 'EOF'
 assignments:
-  ashigaru1:
+  pilot1:
     task_id: null
     description: null
     target_path: null
     status: idle
-  ashigaru2:
+  pilot2:
     task_id: null
     description: null
     target_path: null
     status: idle
-  ashigaru3:
+  pilot3:
     task_id: null
     description: null
     target_path: null
     status: idle
-  ashigaru4:
+  pilot4:
     task_id: null
     description: null
     target_path: null
     status: idle
-  ashigaru5:
+  pilot5:
     task_id: null
     description: null
     target_path: null
     status: idle
-  ashigaru6:
+  pilot6:
     task_id: null
     description: null
     target_path: null
     status: idle
-  ashigaru7:
+  pilot7:
     task_id: null
     description: null
     target_path: null
     status: idle
-  ashigaru8:
+  pilot8:
     task_id: null
     description: null
     target_path: null
@@ -412,8 +412,8 @@ if ! tmux has-session -t bridge 2>/dev/null; then
 fi
 
 # 艦長ペインはウィンドウ名 "main" で指定（base-index 1 環境でも動く）
-SHOGUN_PROMPT=$(generate_prompt "艦長" "magenta" "$SHELL_SETTING")
-tmux send-keys -t bridge:main "cd \"$(pwd)\" && export PS1='${SHOGUN_PROMPT}' && clear" Enter
+CAPTAIN_PROMPT=$(generate_prompt "艦長" "magenta" "$SHELL_SETTING")
+tmux send-keys -t bridge:main "cd \"$(pwd)\" && export PS1='${CAPTAIN_PROMPT}' && clear" Enter
 tmux select-pane -t bridge:main -P 'bg=#002b36'  # 艦長の Solarized Dark
 
 log_success "  └─ 艦長のブリッジ、構築完了"
@@ -464,7 +464,7 @@ tmux split-window -v
 tmux split-window -v
 
 # ペインタイトル設定（0: tactical, 1-8: pilot1-8）
-PANE_TITLES=("karo" "ashigaru1" "ashigaru2" "ashigaru3" "ashigaru4" "ashigaru5" "ashigaru6" "ashigaru7" "ashigaru8")
+PANE_TITLES=("tactical" "pilot1" "pilot2" "pilot3" "pilot4" "pilot5" "pilot6" "pilot7" "pilot8")
 # 色設定（tactical: 赤, pilot: 青）
 PANE_COLORS=("red" "blue" "blue" "blue" "blue" "blue" "blue" "blue" "blue")
 
@@ -595,14 +595,14 @@ NINJA_EOF
 
     # 艦長に指示書を読み込ませる
     log_info "  └─ 艦長に指示書を伝達中..."
-    tmux send-keys -t bridge:main "instructions/shogun.md を読んで役割を理解せよ。"
+    tmux send-keys -t bridge:main "instructions/captain.md を読んで役割を理解せよ。"
     sleep 0.5
     tmux send-keys -t bridge:main Enter
 
     # 戦術長に指示書を読み込ませる
     sleep 2
     log_info "  └─ 戦術長に指示書を伝達中..."
-    tmux send-keys -t "hangar:agents.${PANE_BASE}" "instructions/karo.md を読んで役割を理解せよ。"
+    tmux send-keys -t "hangar:agents.${PANE_BASE}" "instructions/tactical.md を読んで役割を理解せよ。"
     sleep 0.5
     tmux send-keys -t "hangar:agents.${PANE_BASE}" Enter
 
@@ -611,7 +611,7 @@ NINJA_EOF
     log_info "  └─ パイロットに指示書を伝達中..."
     for i in {1..8}; do
         p=$((PANE_BASE + i))
-        tmux send-keys -t "hangar:agents.${p}" "instructions/ashigaru.md を読んで役割を理解せよ。汝はパイロット${i}号である。"
+        tmux send-keys -t "hangar:agents.${p}" "instructions/pilot.md を読んで役割を理解せよ。汝はパイロット${i}号である。"
         sleep 0.3
         tmux send-keys -t "hangar:agents.${p}" Enter
         sleep 0.5
@@ -642,13 +642,13 @@ echo "     └──────────────────────
 echo ""
 echo "     【hangarセッション】戦術長・パイロットのハンガー（3x3 = 9ペイン）"
 echo "     ┌─────────┬─────────┬─────────┐"
-echo "     │  karo   │ashigaru3│ashigaru6│"
+echo "     │tactical │ pilot3  │ pilot6  │"
 echo "     │(戦術長) │(Pilot3) │(Pilot6) │"
 echo "     ├─────────┼─────────┼─────────┤"
-echo "     │ashigaru1│ashigaru4│ashigaru7│"
+echo "     │ pilot1  │ pilot4  │ pilot7  │"
 echo "     │(Pilot1) │(Pilot4) │(Pilot7) │"
 echo "     ├─────────┼─────────┼─────────┤"
-echo "     │ashigaru2│ashigaru5│ashigaru8│"
+echo "     │ pilot2  │ pilot5  │ pilot8  │"
 echo "     │(Pilot2) │(Pilot5) │(Pilot8) │"
 echo "     └─────────┴─────────┴─────────┘"
 echo ""

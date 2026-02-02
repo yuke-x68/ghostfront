@@ -352,7 +352,7 @@ screenshot:
 
 | レイヤー | 場所 | 用途 |
 |---------|------|------|
-| Memory MCP | `memory/shogun_memory.jsonl` | セッションを跨ぐ長期記憶 |
+| Memory MCP | `memory/bridge_memory.jsonl` | セッションを跨ぐ長期記憶 |
 | グローバル | `memory/global_context.md` | システム全体の設定、提督の好み |
 | プロジェクト | `context/{project}.md` | プロジェクト固有の知見 |
 
@@ -486,7 +486,7 @@ claude mcp add sequential-thinking -- npx -y @modelcontextprotocol/server-sequen
 # 5. Memory - セッション間の長期記憶（推奨！）
 # ✅ first_setup.sh で自動設定済み
 # 手動で再設定する場合:
-claude mcp add memory -e MEMORY_FILE_PATH="$PWD/memory/shogun_memory.jsonl" -- npx -y @modelcontextprotocol/server-memory
+claude mcp add memory -e MEMORY_FILE_PATH="$PWD/memory/bridge_memory.jsonl" -- npx -y @modelcontextprotocol/server-memory
 ```
 
 ### インストール確認
@@ -670,9 +670,9 @@ multi-agent-bridge/
 │  └────────────────────────────────────────────────────────────┘
 │
 ├── instructions/             # エージェント指示書
-│   ├── shogun.md             # 艦長の指示書
-│   ├── karo.md               # 戦術長の指示書
-│   └── ashigaru.md           # パイロットの指示書
+│   ├── captain.md            # 艦長の指示書
+│   ├── tactical.md           # 戦術長の指示書
+│   └── pilot.md              # パイロットの指示書
 │
 ├── config/
 │   └── settings.yaml         # 言語その他の設定
@@ -681,7 +681,7 @@ multi-agent-bridge/
 │   └── <project_id>.yaml   # 各プロジェクトの全情報（クライアント、タスク、Notion連携等）
 │
 ├── queue/                    # 通信ファイル
-│   ├── shogun_to_karo.yaml   # 艦長から戦術長へのコマンド
+│   ├── captain_to_tactical.yaml  # 艦長から戦術長へのコマンド
 │   ├── tasks/                # 各ワーカーのタスクファイル
 │   └── reports/              # ワーカーレポート
 │
