@@ -47,6 +47,10 @@ workflow:
     note: "タスク内容に最適な目付け衆ペルソナを選択・宣言。config/personas/の定義ファイルも参照"
   - step: 4
     action: execute_task
+  - step: 4.5
+    action: verify_build
+    condition: "コード変更を伴うタスクの場合"
+    note: "タスクの verify_command またはプロジェクト種別に応じた検証を実施"
   - step: 5
     action: write_report
     target: "queue/reports/ashigaru{N}_report.yaml"
@@ -161,6 +165,7 @@ skill_candidate:
 - □ persona_used を報告に含める準備はあるか？（→ 必須フィールド）
 - □ dashboard.md を直接編集しようとしていないか？（→ 家老の仕事）
 - □ コード・ドキュメントに戦国口調を混入させていないか？（→ ペルソナ品質で書け）
+- □ コード変更を含むタスクでビルド検証を実施したか？（→ 完了報告前に必ず検証）
 
 ### 違反した場合
 1. 即座に行動を中止
@@ -277,6 +282,14 @@ result:
     - "/mnt/c/TS/docs/outputs/WBS_v2.md"
   notes: "担当者3名、期間を2/1-2/15に設定"
 # ═══════════════════════════════════════════════════════════════
+# 【必須】ビルド検証結果（コード変更時）
+# ═══════════════════════════════════════════════════════════════
+build_verified:
+  executed: true    # true/false/skip 必須！
+  command: "npm run build"
+  result: pass      # pass/fail
+  notes: null       # fail時はエラー内容を記載
+# ═══════════════════════════════════════════════════════════════
 # 【必須】スキル化候補の検討（毎回必ず記入せよ！）
 # ═══════════════════════════════════════════════════════════════
 skill_candidate:
@@ -313,6 +326,60 @@ compliance:
 
 **注意**: `compliance` の記入を忘れた報告は不完全とみなす。
 正直な自己申告は評価される。隠蔽は発覚時により重い処分となる。
+
+## 🔴 ビルド検証（完了報告前 必須）
+
+コード変更を伴うタスクでは、**完了報告の前に必ずビルド検証を実施せよ**。
+検証なしの完了報告は不完全とみなす。
+
+### 検証手順
+
+1. タスクファイルの `verify_command` を確認
+   - 記載があれば、そのコマンドを実行
+   - 記載がなければ、`config/projects.yaml` の `verify_commands` またはプロジェクト種別から判断（下表参照）
+2. ビルド/テストが通過することを確認
+3. 報告書の `build_verified` に結果を記載
+
+### プロジェクト種別ごとの検証コマンド
+
+| 種別 | 検証コマンド |
+|------|-------------|
+| Next.js / React | `npm run build` |
+| Python (pytest) | `pytest --tb=short` |
+| Docker Compose | `docker compose build` |
+| Go | `go build ./...` |
+| その他 | タスク指示に従う |
+
+### 検証コマンドの優先順位
+
+1. **タスクYAMLの `verify_command`**（最優先）
+2. **`config/projects.yaml` の `verify_commands`**（プロジェクト固有）
+3. **上記プロジェクト種別テーブル**（汎用）
+
+### 検証が不要なケース
+
+- ドキュメントのみの変更（.md, .yaml, .txt）
+- 設計案・調査報告のみ（コード変更なし）
+- タスク指示に `verify_command: skip` と明記されている場合
+
+### 検証失敗時の対応
+
+1. 自力で修正を試みる
+2. 修正できた場合 → 修正内容を報告の notes に追記し、再検証
+3. 修正できない場合 → status を `blocked` にし、エラー内容を notes に記載
+
+### build_verified フィールドの記入ルール
+
+| フィールド | 値 | 説明 |
+|-----------|-----|------|
+| executed | true | 検証実施済み |
+| executed | false | 検証未実施（理由を notes に記載必須） |
+| executed | skip | 検証不要（ドキュメントのみ変更等） |
+| command | 実行したコマンド | 例: `npm run build` |
+| result | pass / fail | 検証結果 |
+| notes | エラー内容等 | fail時は必須、それ以外は null |
+
+**注意**: コード変更タスクで `build_verified` が欠落した報告は不完全とみなす。
 
 ## 🔴 同一ファイル書き込み禁止（RACE-001）
 
