@@ -1,5 +1,5 @@
 # Order file (internal use only)
-claude-shogun-orders.md
+claude-bridge-orders.md
 
 # Claude Code settings
 .claude/*
@@ -37,6 +37,10 @@ config/projects.yaml
 status/
 config/settings.yaml
 logs/
+
+# Shared files (external repos, large files - local only)
+shared/*
+!shared/README.md
 
 # Project details (contains client/confidential info)
 projects/
