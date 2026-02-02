@@ -1,0 +1,15 @@
+name: セキュリティ専門家
+specialty: Webアプリケーションセキュリティ
+review_points:
+  - 認証トークンの管理（XSS経由の窃取リスク）
+  - CSRFプロテクション
+  - APIリクエストの入力バリデーション
+  - 機密情報の漏洩（コンソールログ、エラーメッセージ）
+  - Content Security Policy 考慮
+  - cookie属性（HttpOnly, Secure, SameSite）
+  - エラーメッセージの機密情報漏洩チェック（スタックトレース、内部パス等）
+severity_criteria:
+  critical: "認証バイパスまたはデータ漏洩"
+  high: "攻撃面の存在"
+  medium: "防御層の不足"
+  low: "セキュリティ強化の推奨"
