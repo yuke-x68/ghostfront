@@ -109,7 +109,7 @@ cd /mnt/c/tools/multi-agent-bridge
 ✅ **Launch!**
 
 ```bash
-./shutsujin_departure.sh
+./launch.sh
 ```
 
 </td>
@@ -122,7 +122,7 @@ Open **Ubuntu terminal** (WSL) and run:
 
 ```bash
 cd /mnt/c/tools/multi-agent-bridge
-./shutsujin_departure.sh
+./launch.sh
 ```
 
 ---
@@ -148,7 +148,7 @@ chmod +x *.sh
 
 ```bash
 cd ~/multi-agent-bridge
-./shutsujin_departure.sh
+./launch.sh
 ```
 
 </details>
@@ -187,14 +187,14 @@ Then restart your computer and run `install.bat` again.
 |--------|---------|-------------|
 | `install.bat` | Windows: WSL2 + Ubuntu setup | First time only |
 | `first_setup.sh` | Installs tmux, Node.js, Claude Code CLI + configures Memory MCP | First time only |
-| `shutsujin_departure.sh` | Creates tmux sessions + starts Claude Code + loads instructions | Every day |
+| `launch.sh` | Creates tmux sessions + starts Claude Code + loads instructions | Every day |
 
 ### What `install.bat` does automatically:
 - ✅ Checks if WSL2 is installed (auto-install if missing)
 - ✅ Checks if Ubuntu is installed (auto-install if missing)
 - ✅ Guides you to the next steps (`first_setup.sh`)
 
-### What `shutsujin_departure.sh` does:
+### What `launch.sh` does:
 - ✅ Creates tmux sessions (bridge + hangar)
 - ✅ Launches Claude Code on all agents
 - ✅ Automatically loads instruction files for each agent
@@ -243,7 +243,7 @@ You'll see tmux sessions created:
 
 ### Step 1: Connect to the Captain
 
-After running `shutsujin_departure.sh`, all agents automatically load their instructions and are ready to work.
+After running `launch.sh`, all agents automatically load their instructions and are ready to work.
 
 Open a new terminal and connect to the Captain:
 
@@ -571,7 +571,7 @@ language: en   # Japanese + English translation
 │                      DAILY STARTUP (Run Every Day)                  │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                     │
-│  shutsujin_departure.sh                                             │
+│  launch.sh                                                        │
 │      │                                                              │
 │      ├──▶ Create tmux sessions                                      │
 │      │         • "bridge" session (1 pane)                          │
@@ -587,23 +587,23 @@ language: en   # Japanese + English translation
 </details>
 
 <details>
-<summary><b>shutsujin_departure.sh Options</b> (Click to expand)</summary>
+<summary><b>launch.sh Options</b> (Click to expand)</summary>
 
 ```bash
 # Default: Full startup (tmux sessions + Claude Code launch)
-./shutsujin_departure.sh
+./launch.sh
 
 # Session setup only (without launching Claude Code)
-./shutsujin_departure.sh -s
-./shutsujin_departure.sh --setup-only
+./launch.sh -s
+./launch.sh --setup-only
 
 # Full startup + open Windows Terminal tabs
-./shutsujin_departure.sh -t
-./shutsujin_departure.sh --terminal
+./launch.sh -t
+./launch.sh --terminal
 
 # Show help
-./shutsujin_departure.sh -h
-./shutsujin_departure.sh --help
+./launch.sh -h
+./launch.sh --help
 ```
 
 </details>
@@ -613,13 +613,13 @@ language: en   # Japanese + English translation
 
 **Normal Daily Usage:**
 ```bash
-./shutsujin_departure.sh          # Start everything
+./launch.sh          # Start everything
 tmux attach-session -t bridge     # Connect to give commands
 ```
 
 **Debug Mode (manual control):**
 ```bash
-./shutsujin_departure.sh -s       # Create sessions only
+./launch.sh -s       # Create sessions only
 
 # Manually start Claude Code on specific agents
 tmux send-keys -t bridge:0 'claude --dangerously-skip-permissions' Enter
@@ -633,7 +633,7 @@ tmux kill-session -t bridge
 tmux kill-session -t hangar
 
 # Start fresh
-./shutsujin_departure.sh
+./launch.sh
 ```
 
 </details>
@@ -644,8 +644,8 @@ tmux kill-session -t hangar
 Running `first_setup.sh` automatically adds these aliases to `~/.bashrc`:
 
 ```bash
-alias css='cd /mnt/c/tools/multi-agent-bridge && ./shutsujin_departure.sh'  # Setup + launch
-alias csm='cd /mnt/c/tools/multi-agent-bridge'                              # Navigate to directory only
+alias css='tmux attach-session -t bridge'   # Attach to Captain's bridge
+alias csm='tmux attach-session -t hangar'   # Attach to Tactical/Pilot hangar
 ```
 
 *To apply aliases, run `source ~/.bashrc` or restart your terminal. On WSL, run `wsl --shutdown` in PowerShell first — simply closing the window does not terminate WSL.*
@@ -665,7 +665,7 @@ multi-agent-bridge/
 │  ┌─────────────────── SETUP SCRIPTS ───────────────────┐
 ├── install.bat               # Windows: First-time setup
 ├── first_setup.sh            # Ubuntu/Mac: First-time setup
-├── shutsujin_departure.sh    # Daily startup (auto-loads instructions)
+├── launch.sh                 # Daily startup (auto-loads instructions)
 │  └────────────────────────────────────────────────────┘
 │
 ├── instructions/             # Agent instruction files
