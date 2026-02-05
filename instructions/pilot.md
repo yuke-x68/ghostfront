@@ -268,6 +268,15 @@ tmux send-keys -t hangar:0.0 'pilot{N}、任務完了。帰投する。ブリー
 tmux send-keys -t hangar:0.0 Enter
 ```
 
+**STEP 5: 到達確認（必須）**
+```bash
+sleep 5
+tmux capture-pane -t hangar:0.0 -p | tail -5
+```
+- 戦術長が thinking / working 状態 → 到達OK
+- 戦術長がプロンプト待ち（❯）のまま → **到達失敗。STEP 4を再送せよ**
+- 再送は **1回だけ**。1回再送しても未到達なら、それ以上追わない。報告ファイルは書いてあるので、戦術長の未処理報告スキャンで発見される
+
 ## 報告の書き方
 
 ```yaml
