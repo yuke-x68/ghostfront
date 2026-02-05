@@ -72,6 +72,7 @@ generate_prompt() {
 # オプション解析
 # ═══════════════════════════════════════════════════════════════════════════════
 SETUP_ONLY=false
+KESSEN_MODE=false
 OPEN_TERMINAL=false
 SHELL_OVERRIDE=""
 
@@ -79,6 +80,10 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         -s|--setup-only)
             SETUP_ONLY=true
+            shift
+            ;;
+        -k|--kessen)
+            KESSEN_MODE=true
             shift
             ;;
         -t|--terminal)
@@ -102,6 +107,7 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "オプション:"
             echo "  -s, --setup-only    tmuxセッションのセットアップのみ（Claude起動なし）"
+            echo "  -k, --kessen        決戦の陣（全パイロットをOpus Thinkingで起動）"
             echo "  -t, --terminal      Windows Terminal で新しいタブを開く"
             echo "  -shell, --shell SH  シェルを指定（bash または zsh）"
             echo "                      未指定時は config/settings.yaml の設定を使用"
@@ -109,6 +115,7 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "例:"
             echo "  ./launch.sh              # 全エージェント起動（通常の出撃）"
+            echo "  ./launch.sh -k           # 決戦の陣（全パイロットOpus Thinking）"
             echo "  ./launch.sh -s           # セットアップのみ（手動でClaude起動）"
             echo "  ./launch.sh -t           # 全エージェント起動 + ターミナルタブ展開"
             echo "  ./launch.sh -shell bash  # bash用プロンプトで起動"
@@ -500,13 +507,36 @@ if [ "$SETUP_ONLY" = false ]; then
     # 少し待機（安定のため）
     sleep 1
 
-    # 戦術長 + パイロット（9ペイン）
-    for i in {0..8}; do
-        p=$((PANE_BASE + i))
-        tmux send-keys -t "hangar:agents.${p}" "claude --dangerously-skip-permissions"
-        tmux send-keys -t "hangar:agents.${p}" Enter
-    done
-    log_info "  └─ 戦術長・パイロット、接続完了"
+    # 戦術長（pane 0）: Opus Thinking
+    p=$((PANE_BASE + 0))
+    tmux send-keys -t "hangar:agents.${p}" "claude --model opus --dangerously-skip-permissions"
+    tmux send-keys -t "hangar:agents.${p}" Enter
+    log_info "  └─ 戦術長（Opus Thinking）、接続完了"
+
+    if [ "$KESSEN_MODE" = true ]; then
+        # 決戦の陣: 全パイロット Opus Thinking
+        for i in {1..8}; do
+            p=$((PANE_BASE + i))
+            tmux send-keys -t "hangar:agents.${p}" "claude --model opus --dangerously-skip-permissions"
+            tmux send-keys -t "hangar:agents.${p}" Enter
+        done
+        log_info "  └─ パイロット1-8（全機Opus Thinking）、接続完了"
+    else
+        # 平時の陣: パイロット1-4=Sonnet Thinking、5-8=Opus Thinking
+        for i in {1..4}; do
+            p=$((PANE_BASE + i))
+            tmux send-keys -t "hangar:agents.${p}" "claude --model sonnet --dangerously-skip-permissions"
+            tmux send-keys -t "hangar:agents.${p}" Enter
+        done
+        log_info "  └─ パイロット1-4（Sonnet Thinking）、接続完了"
+
+        for i in {5..8}; do
+            p=$((PANE_BASE + i))
+            tmux send-keys -t "hangar:agents.${p}" "claude --model opus --dangerously-skip-permissions"
+            tmux send-keys -t "hangar:agents.${p}" Enter
+        done
+        log_info "  └─ パイロット5-8（Opus Thinking）、接続完了"
+    fi
 
     log_success "✅ 全機 Claude Code 起動完了"
     echo ""
