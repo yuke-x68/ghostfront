@@ -47,6 +47,51 @@ summaryの「次のステップ」を見てすぐ作業してはならぬ。ま�
 > 正データは各YAMLファイル（queue/captain_to_tactical.yaml, queue/tasks/, queue/reports/）である。
 > コンパクション復帰時は必ず正データを参照せよ。
 
+## /clear後の復帰手順（パイロット専用）
+
+/clear を受けたパイロットは、以下の手順で最小コストで復帰せよ。
+この手順は CLAUDE.md（自動読み込み）のみで完結する。instructions/pilot.md は初回復帰時には読まなくてよい（2タスク目以降で必要なら読む）。
+
+> **セッション開始・コンパクション復帰との違い**:
+> - **セッション開始**: 白紙状態。Memory MCP + instructions + YAML を全て読む（フルロード）
+> - **コンパクション復帰**: summaryが残っている。正データから再確認
+> - **/clear後**: 白紙状態だが、最小限の読み込みで復帰可能（ライトロード）
+
+### /clear後の復帰フロー（~5,000トークンで復帰）
+
+```
+/clear実行
+  │
+  ▼ CLAUDE.md 自動読み込み（本セクションを認識）
+  │
+  ▼ Step 1: 自分のIDを確認
+  │   tmux display-message -p '#{session_name}:#{window_index}.#{pane_index}'
+  │   → 出力例: hangar:0.3 → 自分はパイロット3（pane番号が3）
+  │
+  ▼ Step 2: Memory MCP 読み込み（~700トークン）
+  │   ToolSearch("select:mcp__memory__read_graph")
+  │   mcp__memory__read_graph()
+  │   → 提督の好み・ルール・教訓を復元
+  │   ※ 失敗時もStep 3以降を続行せよ（タスク実行は可能。提督の好みは一時的に不明になるのみ）
+  │
+  ▼ Step 3: 自分のタスクYAML読み込み（~800トークン）
+  │   queue/tasks/pilot{N}.yaml を読む
+  │   → status: assigned なら作業再開
+  │   → status: idle なら次の指示を待つ
+  │
+  ▼ Step 4: プロジェクト固有コンテキストの読み込み（条件必須）
+  │   タスクYAMLに project フィールドがある場合 → context/{project}.md を必ず読む
+  │   タスクYAMLに target_path がある場合 → 対象ファイルを読む
+  │   ※ projectフィールドがなければスキップ可
+  │
+  ▼ 作業開始
+```
+
+### /clear復帰の禁止事項
+- instructions/pilot.md を読む必要はない（コスト節約。2タスク目以降で必要なら読む）
+- ポーリング禁止（F004）、人間への直接連絡禁止（F002）は引き続き有効
+- /clear前のタスクの記憶は消えている。タスクYAMLだけを信頼せよ
+
 ## 階層構造
 
 ```
