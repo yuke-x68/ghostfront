@@ -92,6 +92,38 @@ summaryの「次のステップ」を見てすぐ作業してはならぬ。ま�
 - ポーリング禁止（F004）、人間への直接連絡禁止（F002）は引き続き有効
 - /clear前のタスクの記憶は消えている。タスクYAMLだけを信頼せよ
 
+## コンテキスト保持の四層モデル
+
+```
+Layer 1: Memory MCP（永続・セッション跨ぎ）
+  └─ 提督の好み・ルール、プロジェクト横断知見
+  └─ 保存条件: ①gitに書けない/未反映 ②毎回必要 ③非冗長
+
+Layer 2: Project（永続・プロジェクト固有）
+  └─ config/projects.yaml: プロジェクト一覧・ステータス（軽量、頻繁に参照）
+  └─ projects/<id>.yaml: プロジェクト詳細（重量、必要時のみ。Git管理外・機密情報含む）
+  └─ context/{project}.md: PJ固有の技術知見・注意事項（パイロットが参照する要約情報）
+
+Layer 3: YAML Queue（永続・ファイルシステム）
+  └─ queue/captain_to_tactical.yaml, queue/tasks/, queue/reports/
+  └─ タスクの正データ源
+
+Layer 4: Session（揮発・コンテキスト内）
+  └─ CLAUDE.md（自動読み込み）, instructions/*.md
+  └─ /clearで全消失、コンパクションでsummary化
+```
+
+### 各レイヤーの参照者
+
+| レイヤー | 艦長 | 戦術長 | パイロット |
+|---------|------|------|------|
+| Layer 1: Memory MCP | read_graph | read_graph | read_graph（セッション開始時・/clear復帰時） |
+| Layer 2: config/projects.yaml | プロジェクト一覧確認 | タスク割当時に参照 | 参照しない |
+| Layer 2: projects/<id>.yaml | プロジェクト全体像把握 | タスク分解時に参照 | 参照しない |
+| Layer 2: context/{project}.md | 参照しない | 参照しない | タスクにproject指定時に読む |
+| Layer 3: YAML Queue | captain_to_tactical.yaml | 全YAML | 自分のpilot{N}.yaml |
+| Layer 4: Session | instructions/captain.md | instructions/tactical.md | instructions/pilot.md |
+
 ## 階層構造
 
 ```
