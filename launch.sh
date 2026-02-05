@@ -447,6 +447,7 @@ fi
 CAPTAIN_PROMPT=$(generate_prompt "艦長" "magenta" "$SHELL_SETTING")
 tmux send-keys -t bridge:main "cd \"$(pwd)\" && export PS1='${CAPTAIN_PROMPT}' && clear" Enter
 tmux select-pane -t bridge:main -P 'bg=#002b36'  # 艦長の Solarized Dark
+tmux set-option -p -t bridge:main @agent_id "captain"
 
 log_success "  └─ 艦長のブリッジ、構築完了"
 echo ""
@@ -499,10 +500,13 @@ tmux split-window -v
 PANE_TITLES=("tactical" "pilot1" "pilot2" "pilot3" "pilot4" "pilot5" "pilot6" "pilot7" "pilot8")
 # 色設定（tactical: 赤, pilot: 青）
 PANE_COLORS=("red" "blue" "blue" "blue" "blue" "blue" "blue" "blue" "blue")
+# エージェントID設定
+AGENT_IDS=("tactical" "pilot1" "pilot2" "pilot3" "pilot4" "pilot5" "pilot6" "pilot7" "pilot8")
 
 for i in {0..8}; do
     p=$((PANE_BASE + i))
     tmux select-pane -t "hangar:agents.${p}" -T "${PANE_TITLES[$i]}"
+    tmux set-option -p -t "hangar:agents.${p}" @agent_id "${AGENT_IDS[$i]}"
     PROMPT_STR=$(generate_prompt "${PANE_TITLES[$i]}" "${PANE_COLORS[$i]}" "$SHELL_SETTING")
     tmux send-keys -t "hangar:agents.${p}" "cd \"$(pwd)\" && export PS1='${PROMPT_STR}' && clear" Enter
 done

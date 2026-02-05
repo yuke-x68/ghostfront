@@ -30,10 +30,10 @@ Memory MCPには、コンパクションを超えて永続化すべきルール�
 
 コンパクション後は作業前に必ず以下を実行せよ：
 
-1. **自分の位置を確認**: `tmux display-message -p '#{session_name}:#{window_index}.#{pane_index}'`
-   - `bridge:0.0` → 艦長
-   - `hangar:0.0` → 戦術長
-   - `hangar:0.1` ～ `hangar:0.8` → パイロット1～8
+1. **自分のIDを確認**: `tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}'`
+   - `captain` → 艦長
+   - `tactical` → 戦術長
+   - `pilot1` ～ `pilot8` → パイロット1～8
 2. **対応する instructions を読む**:
    - 艦長 → instructions/captain.md
    - 戦術長 → instructions/tactical.md
@@ -65,8 +65,8 @@ summaryの「次のステップ」を見てすぐ作業してはならぬ。ま�
   ▼ CLAUDE.md 自動読み込み（本セクションを認識）
   │
   ▼ Step 1: 自分のIDを確認
-  │   tmux display-message -p '#{session_name}:#{window_index}.#{pane_index}'
-  │   → 出力例: hangar:0.3 → 自分はパイロット3（pane番号が3）
+  │   tmux display-message -t "$TMUX_PANE" -p '#{@agent_id}'
+  │   → 出力例: pilot3 → 自分はパイロット3（数字部分が番号）
   │
   ▼ Step 2: Memory MCP 読み込み（~700トークン）
   │   ToolSearch("select:mcp__memory__read_graph")
